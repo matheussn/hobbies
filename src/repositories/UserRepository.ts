@@ -1,8 +1,7 @@
-import { Connection, Model } from 'mongoose'
+import { Connection, Model, Types } from 'mongoose'
 import { User, UserSchema } from 'src/models/User';
 import { CreateUserInterface } from 'src/dtos/requests/CreateUserRequest';
 import { UpdateUserRequest } from 'src/dtos/requests/UpdateUserRequest';
-import * as uuid from 'uuid';
 import { createMongoConnection } from './utils';
 
 export default class UserRepository {
@@ -14,7 +13,7 @@ export default class UserRepository {
     }
 
     async createUser(user: CreateUserInterface): Promise<User> {
-        return this.model.create({ id: uuid.v4(), name: user.name, hobbies: user.hobbies })
+        return this.model.create({ _id: new Types.ObjectId(), name: user.name })
     }
 
     async findAll(): Promise<User[]> {

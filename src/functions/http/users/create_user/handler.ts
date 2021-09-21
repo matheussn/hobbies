@@ -8,10 +8,7 @@ import request from './schema';
 import userService from 'src/services/UserService';
 
 const hello: ValidatedEventAPIGatewayProxyEvent<typeof request> = async (event) => {
-  const user = await userService.createUser({
-    name: event.body.name,
-    hobbies: []
-  })
+  const user = await userService.createUser({ name: event.body.name })
 
   return formatJSONResponse({
     message: `Usuário criado com sucesso`,
