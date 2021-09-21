@@ -1,18 +1,14 @@
-import 'source-map-support/register';
-
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
-import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-
-import schema from './schema';
+import { Handler } from 'aws-lambda';
+import 'source-map-support/register';
 import userService from 'src/services/UserService';
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const updateUser: Handler = async (event) => {
   const user = await userService.updateUser(event.pathParameters.id, { name: event.body.name })
-  return formatJSONResponse({
-    message: `Usuário atualizado com sucesso`,
-    data: user
-  });
+  return {
+    statusCode: 200,
+    body: JSON.stringify(user)
+  }
 }
 
-export const main = middyfy(hello);
+export const main = middyfy(updateUser);

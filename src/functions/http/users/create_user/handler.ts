@@ -1,19 +1,15 @@
-import 'source-map-support/register';
-
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
-import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-
-import request from './schema';
+import { Handler } from 'aws-lambda';
+import 'source-map-support/register';
 import userService from 'src/services/UserService';
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof request> = async (event) => {
+const createUser: Handler = async (event) => {
   const user = await userService.createUser({ name: event.body.name })
 
-  return formatJSONResponse({
-    message: `Usuário criado com sucesso`,
-    data: user
-  })
+  return {
+    statusCode: 201,
+    body: JSON.stringify(user)
+  }
 }
 
-export const main = middyfy(hello);
+export const main = middyfy(createUser);

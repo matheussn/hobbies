@@ -1,14 +1,15 @@
-import 'source-map-support/register';
-
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
-import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
+import { Handler } from 'aws-lambda';
+import 'source-map-support/register';
 import userService from 'src/services/UserService';
-import schema from './schema';
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
+
+const readUser: Handler = async () => {
   const users = await userService.getAllUsers()
-  return formatJSONResponse({data: users});
+  return { 
+    statusCode: 200,
+    body: JSON.stringify(users)
+  }
 }
 
-export const main = middyfy(hello);
+export const main = middyfy(readUser);

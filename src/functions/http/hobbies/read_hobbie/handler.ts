@@ -1,18 +1,14 @@
-import 'source-map-support/register';
-
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/apiGateway';
-import { formatJSONResponse } from '@libs/apiGateway';
 import { middyfy } from '@libs/lambda';
-
-import schema from './schema';
+import { Handler } from 'aws-lambda';
+import 'source-map-support/register';
 import HobbieService from 'src/services/HobbieService';
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const readHobbie: Handler = async (event) => {
   const hobbies = await HobbieService.getAllHobbies(event.pathParameters.id)
-  return formatJSONResponse({
-    message: `Bora`,
-    data: hobbies
-  });
+  return {
+    statusCode: 200,
+    body: JSON.stringify(hobbies)
+  }
 }
 
-export const main = middyfy(hello);
+export const main = middyfy(readHobbie);
