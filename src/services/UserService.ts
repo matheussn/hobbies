@@ -1,9 +1,9 @@
 import { User } from "src/models/User";
 import UserRepository from "src/repositories/UserRepository";
-import { CreateUserInterface } from "src/dtos/requests/CreateUserRequest";
-import { HobbiesResponse, UserResponse } from "src/dtos/responses/UserResponse";
-import { UpdateUserRequest } from "src/dtos/requests/UpdateUserRequest";
 import { Hobbie } from "src/models/Hobbie";
+import { UserResponse } from "src/dtos/user/responses";
+import { HobbiesResponse } from "src/dtos/hobbie/response";
+import { CreateUserRequest, UpdateUserRequest } from "src/dtos/user/requests";
 
 
 class UserService {
@@ -28,7 +28,7 @@ class UserService {
         return response
     }
 
-    async createUser(user: CreateUserInterface): Promise<UserResponse> {
+    async createUser(user: CreateUserRequest): Promise<UserResponse> {
         const { name, id } = await this.userRepository.createUser(user)
 
         return { id: id, name: name }

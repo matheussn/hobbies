@@ -1,41 +1,50 @@
 import { Connection, Model, Types } from 'mongoose';
 import { NotFoundException } from 'src/base/exceptions';
-import { CreateUserInterface } from 'src/dtos/requests/CreateUserRequest';
-import { UpdateUserRequest } from 'src/dtos/requests/UpdateUserRequest';
-import { HobbieSchema } from 'src/models/Hobbie';
+import { CreateUserRequest, UpdateUserRequest } from 'src/dtos/user/requests';
+import { Hobbie, HobbieSchema } from 'src/models/Hobbie';
 import { User, UserSchema } from 'src/models/User';
 import { createMongoConnection } from './utils';
 
 export default class UserRepository {
-    model: Model<User>
+    userModel: Model<User>
+    hobbieModel: Model<Hobbie>
 
-    constructor() {
-        let mongoConn: Connection = createMongoConnection()
-        mongoConn.model('Hobbie', HobbieSchema)
-        this.model = mongoConn.model('User', UserSchema)
+    constructor(mongoConnection: Connection = createMongoConnection()) {
+        this.hobbieModel = mongoConnection.model('Hobbie', HobbieSchema)
+        this.userModel = mongoConnection.model('User', UserSchema)
     }
 
-    async createUser(user: CreateUserInterface): Promise<User> {
-        return this.model.create({ _id: new Types.ObjectId(), name: user.name })
+    async createUser(user: CreateUserRequest): Promise<User> {
+        return this.userModel.create({ _id: new Types.ObjectId(), name: user.name })
     }
 
     async findAll(): Promise<User[]> {
-        return this.model.find().populate('hobbies')
+        return this.userModel.find().populate('hobbies')
     }
 
     async deleteOne(id: string) {
-        await this.model.deleteOne({ id: id }).exec()
+        const user = await this.userModel.findById(id).populate('hobbies')
+
+        this.validUser(user)
+
+        user.hobbies.forEach(hobbie => { hobbie.delete() })
+
+        await this.userModel.findByIdAndDelete(id).exec()
     }
 
     async update(id: string, updateUser: UpdateUserRequest): Promise<User> {
-        const user = await this.model.findById(id)
+        const user = await this.userModel.findById(id)
 
-        if (user == null) {
-            throw new NotFoundException("User Not Found")
-        }
+        this.validUser(user)
 
         user.name = updateUser.name
         return user.save()
+    }
+
+    validUser(user: User) {
+        if(user == null){
+            throw new NotFoundException("User Not Found")
+        }
     }
 
 }

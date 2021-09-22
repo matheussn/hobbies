@@ -1,14 +1,8 @@
 import { Schema } from "mongoose";
+import { HobbiesResponse } from "../hobbie/response";
 
 export interface UserResponse {
     id: Schema.Types.ObjectId
     name: string,
     hobbies?: HobbiesResponse[]
-}
-
-export interface HobbiesResponse {
-    id: Schema.Types.ObjectId
-    name: string,
-    experienceLevel: string,
-    year: number
 }

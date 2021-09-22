@@ -1,8 +1,8 @@
-import { UpdateUserRequest } from "src/dtos/requests/UpdateUserRequest";
-import HobbieRepository from "src/repositories/HobbieRepository";
-import { CreateHobbieRequest } from "src/dtos/requests/CreateHobbieRequest";
+import { CreateHobbieRequest, UpdateHobbieRequest } from "src/dtos/hobbie/requests";
+import { HobbiesResponse } from "src/dtos/hobbie/response";
+
 import { Hobbie } from "src/models/Hobbie";
-import { HobbiesResponse } from "src/dtos/responses/UserResponse";
+import HobbieRepository from "src/repositories/HobbieRepository";
 
 
 class HobbieService {
@@ -25,14 +25,14 @@ class HobbieService {
         return this.convertHobbie(newHobbie)
     }
 
-    async deleteUser(id: string) {
-        await this.hobbieRepository.deleteOne(id)
+    async deleteHobbie(userId: string, id: string) {
+        await this.hobbieRepository.deleteHobbie(userId, id)
     }
 
-    async updateUser(id: string, user: UpdateUserRequest) {
-        const newUser = await this.hobbieRepository.update(id, user)
+    async updatehobbie(id: string, request: UpdateHobbieRequest): Promise<HobbiesResponse> {
+        const newHobbie = await this.hobbieRepository.update(id, request)
 
-        return { id: id, name: newUser.name }
+        return this.convertHobbie(newHobbie)
     }
 
     convertHobbie(hobbie: Hobbie): HobbiesResponse {

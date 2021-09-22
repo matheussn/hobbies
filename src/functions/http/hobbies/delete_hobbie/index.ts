@@ -7,7 +7,7 @@ export default {
     {
       http: {
         method: 'delete',
-        path: 'user/{id}',
+        path: 'user/{userId}/hobbie/{hobbieId}',
         request: {
           schema: {
             'application/json': schema

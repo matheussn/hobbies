@@ -6,7 +6,7 @@ import userService from 'src/services/UserService';
 
 const readUser: Handler = async () => {
   const users = await userService.getAllUsers()
-  return { 
+  return {
     statusCode: 200,
     body: JSON.stringify(users)
   }
