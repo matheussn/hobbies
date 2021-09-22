@@ -4,6 +4,7 @@ import { UpdateUserRequest } from 'src/dtos/requests/UpdateUserRequest';
 import { createMongoConnection } from './utils';
 import { Hobbie, HobbieSchema } from 'src/models/Hobbie';
 import { CreateHobbieRequest } from 'src/dtos/requests/CreateHobbieRequest';
+import { NotFoundException } from 'src/base/exceptions';
 
 export default class HobbieRepository {
     hobbieModel: Model<Hobbie>
@@ -18,6 +19,10 @@ export default class HobbieRepository {
     async createHobbie(userId: string, hobbie: CreateHobbieRequest): Promise<Hobbie> {
 
         const user = await this.userModel.findById(userId)
+
+        if (user == null) {
+            throw new NotFoundException("User not Found")
+        }
 
         const savedHobbie = await this.hobbieModel.create({
             _id: new Types.ObjectId(),

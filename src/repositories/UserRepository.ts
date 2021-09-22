@@ -1,9 +1,10 @@
-import { Connection, Model, Types } from 'mongoose'
-import { User, UserSchema } from 'src/models/User';
+import { Connection, Model, Types } from 'mongoose';
+import { NotFoundException } from 'src/base/exceptions';
 import { CreateUserInterface } from 'src/dtos/requests/CreateUserRequest';
 import { UpdateUserRequest } from 'src/dtos/requests/UpdateUserRequest';
-import { createMongoConnection } from './utils';
 import { HobbieSchema } from 'src/models/Hobbie';
+import { User, UserSchema } from 'src/models/User';
+import { createMongoConnection } from './utils';
 
 export default class UserRepository {
     model: Model<User>
@@ -30,7 +31,7 @@ export default class UserRepository {
         const user = await this.model.findById(id)
 
         if (user == null) {
-            throw Error("User Not Found")
+            throw new NotFoundException("User Not Found")
         }
 
         user.name = updateUser.name
