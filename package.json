@@ -4,7 +4,8 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
-    "test": "jest"
+    "local": "export NODE_ENV=local && sls offline start",
+    "test": "export NODE_ENV=local && jest"
   },
   "engines": {
     "node": ">=14.15.0"

@@ -2,7 +2,6 @@ import { NotFoundException } from "./exceptions";
 
 export const ErrorHandler = {
   onError: (handler) => {
-    console.log(handler.error)
     switch (handler.error.constructor) {
       case NotFoundException:
         handler.response = defaultResponse(404, handler.error.message)
