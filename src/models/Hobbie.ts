@@ -1,6 +1,6 @@
 import { Document, Schema } from 'mongoose';
 
-export interface Hobbie extends Document {
+export interface Hobbies extends Document {
     _id: Schema.Types.ObjectId
     experienceLevel: string
     name: string
@@ -14,7 +14,7 @@ export enum ExperienceLevel {
     VERY_HIGH = "very_high",
 }
 
-export const HobbieSchema = new Schema<Hobbie>({
+export const HobbieSchema = new Schema<Hobbies>({
     _id: { type: Schema.Types.ObjectId, required: true },
     experienceLevel: { type: String, required: true, enum: ExperienceLevel, default: ExperienceLevel.LOW },
     name: { type: String, required: true },

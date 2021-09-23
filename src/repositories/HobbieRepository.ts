@@ -1,20 +1,20 @@
 import { Connection, Model, Types } from 'mongoose';
-import { NotFoundException } from 'src/base/exceptions';
-import { CreateHobbieRequest, UpdateHobbieRequest } from 'src/dtos/hobbie/requests';
-import { Hobbie, HobbieSchema } from 'src/models/Hobbie';
-import { User, UserSchema } from 'src/models/User';
+import { NotFoundException } from '../base/exceptions';
+import { CreateHobbieRequest, UpdateHobbieRequest } from '../dtos/hobbie/requests';
+import { Hobbies, HobbieSchema } from '../models/Hobbie';
+import { Users, UserSchema } from '../models/User';
 import { createMongoConnection } from './utils';
 
 export default class HobbieRepository {
-    hobbieModel: Model<Hobbie>
-    userModel: Model<User>
+    hobbieModel: Model<Hobbies>
+    userModel: Model<Users>
 
     constructor(mongoConnection: Connection = createMongoConnection()) {
-        this.hobbieModel = mongoConnection.model('Hobbie', HobbieSchema)
-        this.userModel = mongoConnection.model('User', UserSchema)
+        this.hobbieModel = mongoConnection.model('Hobbies', HobbieSchema)
+        this.userModel = mongoConnection.model('Users', UserSchema)
     }
 
-    async createHobbie(userId: string, hobbie: CreateHobbieRequest): Promise<Hobbie> {
+    async createHobbie(userId: string, hobbie: CreateHobbieRequest): Promise<Hobbies> {
 
         const user = await this.userModel.findById(userId)
 
@@ -30,14 +30,15 @@ export default class HobbieRepository {
         })
 
         user.hobbies.push(savedHobbie)
-        user.save()
+        await user.save()
 
         return savedHobbie
     }
 
-    async findAllByUser(userId: string): Promise<Hobbie[]> {
+    async findAllByUser(userId: string): Promise<Hobbies[]> {
         const user = await this.userModel.findById(userId).populate('hobbies')
-        if(user == null) {
+
+        if (user == null) {
             throw new NotFoundException("User not found!")
         }
         return user.hobbies
@@ -49,14 +50,13 @@ export default class HobbieRepository {
         const hobbie = await this.hobbieModel.findById(hobbieId)
         this.validIfNotNull(hobbie, "Hobbie Not Found")
 
-        console.log(user.hobbies)
         user.hobbies = user.hobbies.filter(hobbie => hobbie.id != hobbieId)
-        console.log(user.hobbies)
+
         await user.save()
         await hobbie.delete()
     }
 
-    async update(id: string, updateHobbie: UpdateHobbieRequest): Promise<Hobbie> {
+    async update(id: string, updateHobbie: UpdateHobbieRequest): Promise<Hobbies> {
         const hobbie = await this.hobbieModel.findById(id)
 
         hobbie.name = updateHobbie.name ? updateHobbie.name : hobbie.name
@@ -67,7 +67,7 @@ export default class HobbieRepository {
     }
 
     validIfNotNull(model: any, message: string) {
-        if(model == null){
+        if (model == null) {
             throw new NotFoundException(message)
         }
     }

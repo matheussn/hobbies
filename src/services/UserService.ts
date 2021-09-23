@@ -1,9 +1,9 @@
-import { User } from "src/models/User";
-import UserRepository from "src/repositories/UserRepository";
-import { Hobbie } from "src/models/Hobbie";
-import { UserResponse } from "src/dtos/user/responses";
-import { HobbiesResponse } from "src/dtos/hobbie/response";
-import { CreateUserRequest, UpdateUserRequest } from "src/dtos/user/requests";
+import { Users } from "../models/User";
+import UserRepository from "../repositories/UserRepository";
+import { Hobbies } from "../models/Hobbie";
+import { UserResponse } from "../dtos/user/responses";
+import { HobbiesResponse } from "../dtos/hobbie/response";
+import { CreateUserRequest, UpdateUserRequest } from "../dtos/user/requests";
 
 
 class UserService {
@@ -14,13 +14,13 @@ class UserService {
     }
 
     async getAllUsers(): Promise<UserResponse[]> {
-        const users: User[] = await this.userRepository.findAll()
+        const users: Users[] = await this.userRepository.findAll()
 
-        const response: UserResponse[] = users.map<UserResponse>((user: User) => {
+        const response: UserResponse[] = users.map<UserResponse>((user: Users) => {
             return {
                 id: user._id,
                 name: user.name,
-                hobbies: user.hobbies.map<HobbiesResponse>((hobbie: Hobbie) => {
+                hobbies: user.hobbies.map<HobbiesResponse>((hobbie: Hobbies) => {
                     return { id: hobbie.id, name: hobbie.name, experienceLevel: hobbie.experienceLevel, year: hobbie.year }
                 })
             }

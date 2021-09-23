@@ -1,7 +1,6 @@
 import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
-import 'source-map-support/register';
-import userService from 'src/services/UserService';
+import userService from '../../../../services/UserService';
 
 const deleteUser: Handler = async (event) => {
   await userService.deleteUser(event.pathParameters.id)

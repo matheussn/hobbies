@@ -1,9 +1,11 @@
 import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
-import hobbieService from 'src/services/HobbieService';
+import { HobbieService } from '../../../../services/hobbie/HobbieService';
+
+const hobbieService = new HobbieService()
 
 const deleteHobbie: Handler = async (event) => {
-  const {userId, hobbieId} = event.pathParameters
+  const { userId, hobbieId } = event.pathParameters
   await hobbieService.deleteHobbie(userId, hobbieId)
   return { statusCode: 204 }
 }

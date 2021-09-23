@@ -1,7 +1,6 @@
 import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
-import 'source-map-support/register';
-import userService from 'src/services/UserService';
+import userService from '../../../../services/UserService';
 
 const updateUser: Handler = async (event) => {
   const user = await userService.updateUser(event.pathParameters.id, { name: event.body.name })

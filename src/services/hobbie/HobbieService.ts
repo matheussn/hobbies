@@ -1,11 +1,10 @@
-import { CreateHobbieRequest, UpdateHobbieRequest } from "src/dtos/hobbie/requests";
-import { HobbiesResponse } from "src/dtos/hobbie/response";
+import { CreateHobbieRequest, UpdateHobbieRequest } from '../../dtos/hobbie/requests';
+import { HobbiesResponse } from '../../dtos/hobbie/response';
+import { Hobbies } from '../../models/Hobbie';
+import HobbieRepository from '../../repositories/HobbieRepository';
 
-import { Hobbie } from "src/models/Hobbie";
-import HobbieRepository from "src/repositories/HobbieRepository";
 
-
-class HobbieService {
+export class HobbieService {
     hobbieRepository: HobbieRepository
 
     constructor(hobbieRepository: HobbieRepository = new HobbieRepository()) {
@@ -15,7 +14,7 @@ class HobbieService {
     async getAllHobbies(userId: string): Promise<HobbiesResponse[]> {
         const allHobbies = await this.hobbieRepository.findAllByUser(userId)
 
-        return allHobbies.map<HobbiesResponse>((hobbie: Hobbie) => {
+        return allHobbies.map<HobbiesResponse>((hobbie: Hobbies) => {
             return this.convertHobbie(hobbie)
         })
     }
@@ -35,9 +34,7 @@ class HobbieService {
         return this.convertHobbie(newHobbie)
     }
 
-    convertHobbie(hobbie: Hobbie): HobbiesResponse {
+    convertHobbie(hobbie: Hobbies): HobbiesResponse {
         return { id: hobbie.id, name: hobbie.name, year: hobbie.year, experienceLevel: hobbie.experienceLevel }
     }
 }
-
-export default new HobbieService();

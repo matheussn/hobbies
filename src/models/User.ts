@@ -1,14 +1,14 @@
 import { Document, Schema } from 'mongoose';
-import { Hobbie } from './Hobbie';
+import { Hobbies } from './Hobbie';
 
-export interface User extends Document {
+export interface Users extends Document {
     _id: Schema.Types.ObjectId
     name: string
-    hobbies?: Hobbie[]
+    hobbies?: Hobbies[]
 }
 
-export const UserSchema = new Schema<User>({
+export const UserSchema = new Schema<Users>({
     _id: { type: Schema.Types.ObjectId, required: true },
     name: { type: String, required: true },
-    hobbies: [{ type: Schema.Types.ObjectId, ref: 'Hobbie' }],
+    hobbies: [{ type: Schema.Types.ObjectId, ref: 'Hobbies' }],
 });

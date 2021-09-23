@@ -1,10 +1,11 @@
 import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
-import 'source-map-support/register';
-import HobbieService from 'src/services/HobbieService';
+import { HobbieService } from '../../../../services/hobbie/HobbieService';
+
+const hobbieService = new HobbieService()
 
 const readHobbie: Handler = async (event) => {
-  const hobbies = await HobbieService.getAllHobbies(event.pathParameters.id)
+  const hobbies = await hobbieService.getAllHobbies(event.pathParameters.id)
   return {
     statusCode: 200,
     body: JSON.stringify(hobbies)

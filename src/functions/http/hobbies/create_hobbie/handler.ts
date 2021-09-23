@@ -1,8 +1,8 @@
 import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
-import 'source-map-support/register';
-import hobbieService from 'src/services/HobbieService';
+import { HobbieService } from '../../../../services/hobbie/HobbieService';
 
+const hobbieService = new HobbieService()
 
 const createHobbie: Handler = async (event) => {
   const { name, year, experienceLevel } = event.body
