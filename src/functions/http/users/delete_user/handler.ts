@@ -1,9 +1,11 @@
 import { Handler } from 'aws-lambda';
 import middyfy from '../../../../libs/lambda';
-import userService from '../../../../services/users/UsersService';
+import { UsersService } from '../../../../services/users/UsersService';
+
+const usersService = new UsersService()
 
 const deleteUser: Handler = async (event) => {
-  await userService.deleteUser(event.pathParameters.id)
+  await usersService.deleteUser(event.pathParameters.userId)
   return { statusCode: 204 }
 }
 

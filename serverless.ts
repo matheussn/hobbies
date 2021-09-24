@@ -13,11 +13,11 @@ const serverlessConfiguration: AWS = {
   plugins: ['serverless-offline', 'serverless-plugin-typescript'],
   provider: {
     name: 'aws',
-    stage: '${prop:stage, "local"}',
+    stage: '${prop:stage, "dev"}',
     runtime: 'nodejs14.x',
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      NODE_ENV: '${prop:stage, "local"}'
+      NODE_ENV: '${prop:stage, "dev"}'
     },
     lambdaHashingVersion: '20201221',
   },

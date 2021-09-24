@@ -46,7 +46,7 @@ export default class UserRepository {
     }
 
     async findById(id: string): Promise<Users> {
-        return this.userModel.findById(id)
+        return this.userModel.findById(id).exec()
     }
 
     validUser(user: Users) {

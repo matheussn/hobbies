@@ -1,9 +1,11 @@
 import { Handler } from 'aws-lambda';
 import middyfy from '../../../../libs/lambda';
-import userService from '../../../../services/users/UsersService';
+import { UsersService } from '../../../../services/users/UsersService';
+
+const usersService = new UsersService()
 
 const updateUser: Handler = async (event) => {
-  const user = await userService.updateUser(event.pathParameters.id, { name: event.body.name })
+  const user = await usersService.updateUser(event.pathParameters.userId, { name: event.body.name })
   return {
     statusCode: 200,
     body: JSON.stringify(user)
