@@ -14,8 +14,10 @@ class UserService {
     }
 
     async getAllUsers(): Promise<UserResponse[]> {
+        console.log("[USER] Buscando usuários no Banco de dados")
         const users: Users[] = await this.userRepository.findAll()
 
+        console.log("[USER] " + users.length + " usuários encontrados!")
         const response: UserResponse[] = users.map<UserResponse>((user: Users) => {
             return {
                 id: user._id,
@@ -25,6 +27,7 @@ class UserService {
                 })
             }
         })
+        console.log("[USER] Retornando Usuários!")
         return response
     }
 

@@ -1,10 +1,3 @@
-// import dotenv from 'dotenv';
-// import path from 'path';
-// const dotenvPath = path.join(__dirname, '../../', `config/.env.${process.env.NODE_ENV}`);
-// dotenv.config({
-//   path: dotenvPath,
-// });
-
 export { default as createHobbie } from './http/hobbies/create_hobbie'
 export { default as readHobbie } from './http/hobbies/read_hobbie'
 export { default as updateHobbie } from './http/hobbies/update_hobbie'

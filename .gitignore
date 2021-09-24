@@ -105,6 +105,7 @@ dist
 
 .nvmrc
 .webpack/
+.build/
 
 yarn.lock
 package-lock.json

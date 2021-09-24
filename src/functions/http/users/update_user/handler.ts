@@ -1,5 +1,5 @@
-import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
+import middyfy from '../../../../libs/lambda';
 import userService from '../../../../services/UserService';
 
 const updateUser: Handler = async (event) => {

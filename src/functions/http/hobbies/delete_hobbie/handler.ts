@@ -1,5 +1,5 @@
-import { middyfy } from '@libs/lambda';
 import { Handler } from 'aws-lambda';
+import middyfy from '../../../../libs/lambda';
 import { HobbieService } from '../../../../services/hobbie/HobbieService';
 
 const hobbieService = new HobbieService()
