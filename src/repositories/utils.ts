@@ -1,5 +1,6 @@
 import { Connection, createConnection } from 'mongoose';
+import dbConfig from '../../config/config'
 
 export function createMongoConnection(): Connection {
-    return createConnection(process.env.MONGO_DB_HOST);
+    return createConnection(dbConfig);
 }
