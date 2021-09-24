@@ -23,7 +23,7 @@ export default class UserRepository {
     }
 
     async deleteOne(id: string) {
-        const user = await this.userModel.findById(id).populate('hobbies')
+        const user = await this.findByIdPopulate(id)
 
         this.validUser(user)
 
@@ -33,12 +33,20 @@ export default class UserRepository {
     }
 
     async update(id: string, updateUser: UpdateUserRequest): Promise<Users> {
-        const user = await this.userModel.findById(id)
+        const user = await this.findById(id)
 
         this.validUser(user)
 
         user.name = updateUser.name
         return user.save()
+    }
+
+    async findByIdPopulate(id: string): Promise<Users> {
+        return this.userModel.findById(id).populate('hobbies')
+    }
+
+    async findById(id: string): Promise<Users> {
+        return this.userModel.findById(id)
     }
 
     validUser(user: Users) {

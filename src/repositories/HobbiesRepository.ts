@@ -16,11 +16,7 @@ export default class HobbieRepository {
 
     async createHobbie(userId: string, hobbie: CreateHobbieRequest): Promise<Hobbies> {
 
-        const user = await this.userModel.findById(userId)
-
-        if (user == null) {
-            throw new NotFoundException("User not Found")
-        }
+        const user = await this.findUser(userId)
 
         const savedHobbie = await this.hobbieModel.create({
             _id: new Types.ObjectId(),
@@ -38,9 +34,7 @@ export default class HobbieRepository {
     async findAllByUser(userId: string): Promise<Hobbies[]> {
         const user = await this.userModel.findById(userId).populate('hobbies')
 
-        if (user == null) {
-            throw new NotFoundException("User not found!")
-        }
+        this.validIfNotNull(user, "User Not Found")
         return user.hobbies
     }
 
@@ -64,6 +58,14 @@ export default class HobbieRepository {
         hobbie.experienceLevel = updateHobbie.experienceLevel ? updateHobbie.experienceLevel : hobbie.experienceLevel
 
         return hobbie.save()
+    }
+
+    private async findUser(userId: string): Promise<Users> {
+        const user = await this.userModel.findById(userId)
+
+        this.validIfNotNull(user, "User not Found")
+
+        return user
     }
 
     validIfNotNull(model: any, message: string) {

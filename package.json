@@ -6,7 +6,7 @@
   "scripts": {
     "local": "sls offline start -s local",
     "offline-dev": "sls offline start -s dev",
-    "test": "jest",
+    "test": "export NODE_ENV=test && jest",
     "coverage": "jest --coverage"
   },
   "engines": {

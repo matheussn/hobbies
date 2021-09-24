@@ -6,7 +6,7 @@ import { HobbiesResponse } from "../../dtos/hobbies/response";
 import { CreateUserRequest, UpdateUserRequest } from "../../dtos/users/requests";
 
 
-class UserService {
+export class UsersService {
     userRepository: UserRepository
 
     constructor(userRepository: UserRepository = new UserRepository()) {
@@ -44,5 +44,3 @@ class UserService {
         return { id: newUser.id, name: newUser.name }
     }
 }
-
-export default new UserService();
