@@ -1,0 +1,5 @@
+{
+    "db":{
+        "connection":"mongodb://adminHobbie:adminHobbie@52.90.8.43:27017/hobbies"
+    }
+}

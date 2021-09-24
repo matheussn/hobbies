@@ -15,7 +15,7 @@
     "target": "esnext"
   },
   "include": [
-    "src/**/*",
+    "serverless/src/**/*",
     "serverless.ts"
   ],
   "exclude": [
