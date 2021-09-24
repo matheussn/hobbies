@@ -1,6 +1,6 @@
 import { Handler } from 'aws-lambda';
 import middyfy from '../../../../libs/lambda';
-import userService from '../../../../services/UserService';
+import userService from '../../../../services/users/UsersService';
 
 
 const readUser: Handler = async () => {

@@ -1,6 +1,6 @@
 import { Handler } from 'aws-lambda';
 import middyfy from '../../../../libs/lambda';
-import userService from '../../../../services/UserService';
+import userService from '../../../../services/users/UsersService';
 
 const createUser: Handler = async (event) => {
   const user = await userService.createUser({ name: event.body.name })

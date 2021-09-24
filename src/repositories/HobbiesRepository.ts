@@ -1,6 +1,6 @@
 import { Connection, Model, Types } from 'mongoose';
 import { NotFoundException } from '../base/exceptions';
-import { CreateHobbieRequest, UpdateHobbieRequest } from '../dtos/hobbie/requests';
+import { CreateHobbieRequest, UpdateHobbieRequest } from '../dtos/hobbies/requests';
 import { Hobbies, HobbieSchema } from '../models/Hobbie';
 import { Users, UserSchema } from '../models/User';
 import { createMongoConnection } from './utils';

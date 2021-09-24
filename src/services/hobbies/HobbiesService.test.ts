@@ -1,14 +1,13 @@
-import { describe, expect, it } from '@jest/globals';
 import assert from 'assert';
 import { Connection } from 'mongoose';
-import { CreateHobbieRequest } from '../../dtos/hobbie/requests';
+import { CreateHobbieRequest } from '../../dtos/hobbies/requests';
 import { createMockConnection, stopMockConnection } from '../../libs/db-conn-tests';
 import { ExperienceLevel } from '../../models/Hobbie';
-import HobbieRepository from '../../repositories/HobbieRepository';
-import UserRepository from '../../repositories/UserRepository';
-import { HobbieService } from './HobbieService';
+import HobbieRepository from '../../repositories/HobbiesRepository';
+import UserRepository from '../../repositories/UsersRepository';
+import { HobbieService } from './HobbiesService';
 
-describe('Test of class HobbieService', () => {
+describe('Test of class HobbiesService', () => {
     let conn: Connection
     let hobbieService: HobbieService
     let hobbieRepository: HobbieRepository
@@ -113,5 +112,27 @@ describe('Test of class HobbieService', () => {
         expect(result2).toBeDefined()
         expect(result2.length).toBe(1)
         expect(result2[0].id).toBe(hobbie.id)
+    })
+
+    it('should update an hobbie', async () => {
+        const user = await userRepository.createUser({ name: "Default User" })
+        const hobbie = await hobbieRepository.createHobbie(user.id, { name: "test hobbie", experienceLevel: ExperienceLevel.LOW, year: 2021 })
+        const hobbie2 = await hobbieRepository.createHobbie(user.id, { name: "test hobbie", experienceLevel: ExperienceLevel.LOW, year: 2021 })
+
+        const result = await hobbieService.getAllHobbies(user.id)
+        expect(result).toBeDefined()
+        expect(result.length).toBe(2)
+        expect(result[0].id).toBe(hobbie.id)
+        expect(result[0].name).toBe(hobbie.name)
+        expect(result[1].id).toBe(hobbie2.id)
+
+        await hobbieService.updatehobbie(hobbie.id, { name: "updated Name" })
+
+        const result2 = await hobbieService.getAllHobbies(user.id)
+        expect(result2).toBeDefined()
+        expect(result2.length).toBe(2)
+        expect(result2[0].id).toBe(hobbie.id)
+        expect(result2[0].name).toBe("updated Name")
+        expect(result2[1].id).toBe(hobbie2.id)
     })
 })

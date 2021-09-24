@@ -1,7 +1,7 @@
-import { CreateHobbieRequest, UpdateHobbieRequest } from '../../dtos/hobbie/requests';
-import { HobbiesResponse } from '../../dtos/hobbie/response';
+import { CreateHobbieRequest, UpdateHobbieRequest } from '../../dtos/hobbies/requests';
+import { HobbiesResponse } from '../../dtos/hobbies/response';
 import { Hobbies } from '../../models/Hobbie';
-import HobbieRepository from '../../repositories/HobbieRepository';
+import HobbieRepository from '../../repositories/HobbiesRepository';
 
 
 export class HobbieService {

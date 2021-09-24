@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { HobbiesResponse } from "../hobbie/response";
+import { HobbiesResponse } from "../hobbies/response";
 
 export interface UserResponse {
     id: Schema.Types.ObjectId

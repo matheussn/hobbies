@@ -1,9 +1,9 @@
-import { Users } from "../models/User";
-import UserRepository from "../repositories/UserRepository";
-import { Hobbies } from "../models/Hobbie";
-import { UserResponse } from "../dtos/user/responses";
-import { HobbiesResponse } from "../dtos/hobbie/response";
-import { CreateUserRequest, UpdateUserRequest } from "../dtos/user/requests";
+import { Users } from "../../models/User";
+import UserRepository from "../../repositories/UsersRepository";
+import { Hobbies } from "../../models/Hobbie";
+import { UserResponse } from "../../dtos/users/responses";
+import { HobbiesResponse } from "../../dtos/hobbies/response";
+import { CreateUserRequest, UpdateUserRequest } from "../../dtos/users/requests";
 
 
 class UserService {
@@ -14,10 +14,8 @@ class UserService {
     }
 
     async getAllUsers(): Promise<UserResponse[]> {
-        console.log("[USER] Buscando usuários no Banco de dados")
         const users: Users[] = await this.userRepository.findAll()
 
-        console.log("[USER] " + users.length + " usuários encontrados!")
         const response: UserResponse[] = users.map<UserResponse>((user: Users) => {
             return {
                 id: user._id,
@@ -27,7 +25,6 @@ class UserService {
                 })
             }
         })
-        console.log("[USER] Retornando Usuários!")
         return response
     }
 
